@@ -7,7 +7,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 
 
-classes = ["0","1","2","3"]
+classes = ["線状の","粒々の","もくもくとした","ふわっとした"]
 image_size = 100
 
 UPLOAD_FOLDER = "uploads"
@@ -44,7 +44,7 @@ def upload_file():
             #変換したデータをモデルに渡して予測する
             result = model.predict(data)[0]
             predicted = result.argmax()
-            pred_answer = "これは " + classes[predicted] + " です"
+            pred_answer = "これは 【 " + classes[predicted] + "雲 】 です"
 
             return render_template("index.html",answer=pred_answer)
 
