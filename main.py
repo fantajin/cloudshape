@@ -25,12 +25,10 @@ model = load_model('./model.h5')#学習済みモデルをロード
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('ファイルがありません')
-            return redirect(request.url)
+            return render_template("index.html",answer='ファイルがありません')
         file = request.files['file']
         if file.filename == '':
-            flash('ファイルがありません')
-            return redirect(request.url)
+            return render_template("index.html",answer='ファイルがありません')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
@@ -55,4 +53,4 @@ def upload_file():
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))
-    app.run(host ='0.0.0.0',port = port)
+    app.run(host ='0.0.0.0',port = port, debug=True)
