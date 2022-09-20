@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, render_template, flash, session
+from flask import Flask, request, redirect, render_template, flash
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.preprocessing import image
@@ -44,7 +44,9 @@ def upload_file():
             #変換したデータをモデルに渡して予測する
             result = model.predict(data)[0]
             predicted = result.argmax()
-            pred_answer = "これは 【 " + classes[predicted] + "雲 】 です"
+            ans_per = float(result[predicted]*100)
+
+            pred_answer = "これは 【 " + classes[predicted] + "雲 】 です。{:.3f}%".format(ans_per)
 
             return render_template("index.html",answer=pred_answer)
 
